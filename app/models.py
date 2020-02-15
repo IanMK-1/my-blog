@@ -56,6 +56,45 @@ class Blog(db.Model):
     __tablename__ = 'blogs'
 
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255))
     blog_post = db.Column(db.String())
     posted_at = db.Column(db.Datetime, default=datetime.utcnow)
-    
+
+    def save_blog(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_blog(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @classmethod
+    def obtain_all_blogs(cls):
+        all_blogs = Blog.query.all()
+        return all_blogs
+
+    @classmethod
+    def obtain_writer_blog(cls, id):
+        writer_blog = Blog.query.filter_by(id=id).first()
+        return writer_blog
+
+
+class Comment(db.Model):
+    __tablename__ = 'comments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(255))
+    comment = db.Column(db.String())
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_comment(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @classmethod
+    def obtain_all_comments(cls):
+        user_comments = Comment.query.all()
+        return user_comments
