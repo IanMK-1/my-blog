@@ -1,9 +1,11 @@
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from flask_login import UserMixin
+from . import login_manager
 
 
-class Writer(db.Model):
+class Writer(db.Model, UserMixin):
     __tablename__ = 'writers'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -28,6 +30,10 @@ class Writer(db.Model):
     def verify_password(self, password):
         return check_password_hash(self.writer_password, password)
 
+    @login_manager.user_loader
+    def load_user(writer_id):
+        return User.query.get(int(writer_id))
+    
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -35,23 +41,10 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), index=True)
     email = db.Column(db.String(255), unique=True, index=True)
-    user_password = db.Column(db.String(255))
-    comment = db.relationship('Comment', backref='user_comment_id', lazy='dynamic')
 
-    # return a printable representation of the object
-    def __repr__(self):
-        return f'User{self.username}'
-
-    @property
-    def password(self):
-        raise AttributeError('You cannot read the password attribute')
-
-    @password.setter
-    def password(self, password):
-        self.user_password = generate_password_hash(password)
-
-    def verify_password(self, password):
-        return check_password_hash(self.user_password, password)
+    def save_user_details(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 class Blog(db.Model):
@@ -95,7 +88,6 @@ class Comment(db.Model):
     username = db.Column(db.String(255))
     comment = db.Column(db.String())
     writer_id = db.Column(db.Integer, db.ForeignKey('writers.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
 
     def save_comment(self):
