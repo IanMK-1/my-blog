@@ -4,26 +4,33 @@
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Cabin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Modak&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div>
                 <div class="title">
-                    <div class="jumbotron">
+                    <div class="blog-title">
                         <h1>Ian's Blog</h1>
+                        <p>Welcome to my blog where i talk about all things tech and also where others can contribute their ideas
+                         on my blog and post for all to see.</p>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="quote">
-                    <div class="list-group-item">
-                        <h3 style="text-align: center;">Quote of the day</h3>
-                        <p style="text-align: center;">{{quote.quote}}</p>
-                        <p><b>Author:</b> {{quote.author}}</p>
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="quote">
+                            <div class="list-group-item">
+                                <h3>Quote of the day</h3>
+                                <p>{{quote.quote}}</p>
+                                <p><b>Author:</b> {{quote.author}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+
                     </div>
                 </div>
             </div>
