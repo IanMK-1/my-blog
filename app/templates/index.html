@@ -9,18 +9,22 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="title">
-                <div class="jumbotron">
-                    <h1>Ian's Blog</h1>
+            <div class="col-md-12">
+                <div class="title">
+                    <div class="jumbotron">
+                        <h1>Ian's Blog</h1>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="list-group-item">
-                    <h3>Quote of the day</h3>
-                    <p style="text-align: center;">{{quote.quote}}</p>
-                    <p>Author: {{quote.author}}</p>
+                <div class="quote">
+                    <div class="list-group-item">
+                        <h3 style="text-align: center;">Quote of the day</h3>
+                        <p style="text-align: center;">{{quote.quote}}</p>
+                        <p><b>Author:</b> {{quote.author}}</p>
+                    </div>
                 </div>
             </div>
         </div>

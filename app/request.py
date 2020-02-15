@@ -1,5 +1,4 @@
 import urllib.request, json
-from .models import Quote
 
 quotes_url = None
 
@@ -19,21 +18,7 @@ def obtain_quote():
         results = None
 
         if get_response:
-            response = get_response
-            results = process_results(response)
+            results = get_response
 
         return results
 
-
-def process_results(result):
-    quote_result = []
-
-    for results in result:
-        author = results.get('author')
-        quote = results.get('quote')
-
-        if quote:
-            quote_instance = Quote(author, quote)
-            quote_result.append(quote_instance)
-
-    return quote_result
