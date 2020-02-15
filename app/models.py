@@ -50,3 +50,12 @@ class User(db.Model):
 
     def verify_password(self, password):
         return check_password_hash(self.user_password, password)
+
+
+class Blog(db.Model):
+    __tablename__ = 'blogs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    blog_post = db.Column(db.String())
+    posted_at = db.Column(db.Datetime, default=datetime.utcnow)
+    
