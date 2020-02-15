@@ -11,6 +11,8 @@ class Writer(db.Model):
     full_name = db.Column(db.String(255), index=True)
     email = db.Column(db.String(255), unique=True, index=True)
     writer_password = db.Column(db.String(255))
+    comment = db.relationship('Comment', backref='comment_id', lazy='dynamic')
+    blog = db.relationship('Blog', backref='blog_id', lazy='dynamic')
 
     # return a printable representation of the object
     def __repr__(self):
@@ -35,6 +37,7 @@ class User(db.Model):
     username = db.Column(db.String(255), index=True)
     email = db.Column(db.String(255), unique=True, index=True)
     user_password = db.Column(db.String(255))
+    comment = db.relationship('Comment', backref='user_comment_id', lazy='dynamic')
 
     # return a printable representation of the object
     def __repr__(self):
@@ -59,6 +62,8 @@ class Blog(db.Model):
     title = db.Column(db.String(255))
     blog_post = db.Column(db.String())
     posted_at = db.Column(db.Datetime, default=datetime.utcnow)
+    writer_blog = db.Column(db.Integer, db.ForeignKey('writers.id'))
+    blog_comment = db.relationship('Comment', backref='blog_comment_id', lazy='dynamic')
 
     def save_blog(self):
         db.session.add(self)
@@ -85,6 +90,9 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255))
     comment = db.Column(db.String())
+    writer_id = db.Column(db.Integer, db.ForeignKey('writers.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
 
     def save_comment(self):
         db.session.add(self)
@@ -95,6 +103,6 @@ class Comment(db.Model):
         db.session.commit()
 
     @classmethod
-    def obtain_all_comments(cls):
-        user_comments = Comment.query.all()
+    def obtain_all_comments(cls, writer_blog):
+        user_comments = Comment.query.filter_by(blog_comment_id=writer_blog).all()
         return user_comments
