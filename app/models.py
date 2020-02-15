@@ -1,6 +1,5 @@
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_manager
 from datetime import datetime
 
 
@@ -72,6 +71,11 @@ class Blog(db.Model):
     def delete_blog(self):
         db.session.delete(self)
         db.session.commit()
+
+    @classmethod
+    def update_blog(cls, id, blog_details):
+        writer_blog = Blog.query.filter_by(id=id).update({"blog_post": blog_details})
+        db.session.commit(writer_blog)
 
     @classmethod
     def obtain_all_blogs(cls):

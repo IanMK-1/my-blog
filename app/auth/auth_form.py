@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import SubmitField, PasswordField, StringField, BooleanField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
+from ..models import User, Writer
 
 
 class WriterRegistration(FlaskForm):
@@ -13,6 +14,10 @@ class WriterRegistration(FlaskForm):
     confirm_password = PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
 
+    def validate_writer_email(self, data_field):
+        if Writer.query.filter_by(email=data_field.data).first():
+            raise ValidationError('There is an account with that email')
+
 
 class UserRegistration(FlaskForm):
     username = StringField('Enter username', validators=[DataRequired()])
@@ -22,6 +27,14 @@ class UserRegistration(FlaskForm):
                                               EqualTo('confirm_password', message='Password does not match')])
     confirm_password = PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
+
+    def validate_user_email(self, data_field):
+        if User.query.filter_by(email=data_field.data).first():
+            raise ValidationError('There is an account with that email')
+
+    def validate_username(self, data_field):
+        if User.query.filter_by(username=data_field.data).first():
+            raise ValidationError('That username is taken')
 
 
 class WriterLogin(FlaskForm):
