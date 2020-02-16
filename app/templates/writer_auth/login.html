@@ -1,6 +1,12 @@
 {% extends 'bootstrap/base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
+{% block navbar %}
+    <div class="container-fluid">
+        {% include 'navbar.html'%}
+    </div>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
@@ -19,7 +25,7 @@
                 {{wtf.quick_form(writerlogin_form)}}
                 <p> Don't have an account? <a href="{{url_for('auth.signup')}}">Sign up here</a></p>
             </div>
-            <div clas="col-md-2">
+            <div class="col-md-2">
 
             </div>
         </div>

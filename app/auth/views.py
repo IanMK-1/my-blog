@@ -6,7 +6,7 @@ from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user
 
 
-@auth.route('/signup', method=["GET", "POST"])
+@auth.route('/signup', methods=["GET", "POST"])
 def signup():
     form = WriterRegistration()
     if form.validate_on_submit():

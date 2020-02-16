@@ -1,0 +1,52 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block navbar %}
+    <div class="container-fluid">
+        {% include 'navbar.html'%}
+    </div>
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Cabin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Modak&display=swap" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <h1>My Blogs</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="option1">
+                    <li class="list-group-item">
+                        <p>Would you like to subscribe to email notifications when new blog is posted? Click the link
+                        below to do so.</p>
+                        <div><a href="#" class="btn bg-primary btn-lg">Subscribe</a></div>
+                    </li>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="option2">
+                    <li class="list-group-item">
+                        <p>Would you like to sign up to be able to post your ideas on my blog? Click the link below
+                        to do so.</p>
+                        <div><a href="{{url_for('auth.signup')}}" class="btn bg-primary btn-lg">Sign up</a></div>
+                    </li>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

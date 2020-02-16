@@ -40,3 +40,15 @@
     color: white;
     border-radius: 0px;
 }
+.jumbotron {
+    background-image: url('/static/images/home3.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    font-family: 'Modak', cursive;
+    border-radius: 0px;
+    color: purple;
+}
+.list-group-item p {
+    font-family: 'Cabin', sans-serif;
+}
