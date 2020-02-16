@@ -16,7 +16,9 @@ def index():
 
 @main.route('/blogs')
 def blogs():
-    return render_template('blogs.html')
+    all_blogs = Blog.obtain_all_blogs()
+
+    return render_template('blogs.html', all_blogs=all_blogs)
 
 
 @main.route('/subscribe', methods=["GET", "POST"])
@@ -76,3 +78,22 @@ def update_pic(full_name):
         writer.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile', full_name=full_name))
+
+
+@main.route('/blog_post', methods=["GET", "POST"])
+@login_required
+def blog_post():
+    blog = WriterBlogForm()
+    if blog.validate_on_submit():
+        title = blog.title.data
+        blog_post = blog.blog_post.data
+
+        new_blog = Blog(title=title, blog_post=blog_post, blog=current_user)
+
+        db.session.add(new_blog)
+        db.session.commit()
+        return redirect(url_for('main.blogs'))
+
+    return render_template('blog_post.html', blog=blog)
+
+

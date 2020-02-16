@@ -34,7 +34,7 @@ class Writer(db.Model, UserMixin):
 
     @login_manager.user_loader
     def load_user(writer_id):
-        return User.query.get(int(writer_id))
+        return Writer.query.get(int(writer_id))
 
 
 class User(db.Model):

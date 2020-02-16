@@ -6,7 +6,7 @@ from ..models import Writer
 
 
 class WriterRegistration(FlaskForm):
-    full_names = StringField('Enter your full names', validators=[DataRequired()])
+    full_name = StringField('Enter your full names', validators=[DataRequired()])
     email = StringField('Enter your email', validators=[DataRequired()])
     writer_password = PasswordField('Enter password', validators=[DataRequired(), EqualTo('confirm_password',
                                                                                           message='Password does not '
@@ -21,7 +21,7 @@ class WriterRegistration(FlaskForm):
 
 class WriterLogin(FlaskForm):
     email = StringField('Your Email Address', validators=[DataRequired(), Email()])
-    user_password = PasswordField('Password', validators=[DataRequired()])
+    writer_password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember me')
     submit = SubmitField('Sign In')
 

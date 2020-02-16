@@ -10,7 +10,7 @@ from flask_login import login_user, login_required, logout_user
 def signup():
     form = WriterRegistration()
     if form.validate_on_submit():
-        writer = Writer(full_names=form.full_names.data, email=form.email.data,
+        writer = Writer(full_name=form.full_name.data, email=form.email.data,
                         password=form.writer_password.data)
         db.session.add(writer)
         db.session.commit()
