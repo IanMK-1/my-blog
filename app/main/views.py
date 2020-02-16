@@ -5,6 +5,7 @@ from .. import db, photos
 from ..models import User, Writer, Blog, Comment
 from .main_form import UserSubscription, WriterBlogForm, UpdateBio, UserCommentForm
 from flask_login import login_required, current_user
+from ..email import mail_message
 
 
 @main.route('/')
@@ -29,7 +30,6 @@ def subscribe():
         email = user.email.data
 
         new_user = User(username=username, email=email)
-
         db.session.add(new_user)
         db.session.commit()
 
@@ -84,6 +84,8 @@ def update_pic(full_name):
 @login_required
 def blog_post():
     blog = WriterBlogForm()
+    user = User.query.all()
+
     if blog.validate_on_submit():
         title = blog.title.data
         blog_post = blog.blog_post.data
@@ -92,6 +94,9 @@ def blog_post():
 
         db.session.add(new_blog)
         db.session.commit()
+
+        mail_message("Welcome to my blog", "email/blog_notification", user.email)
+
         return redirect(url_for('main.blogs'))
 
     return render_template('blog_post.html', blog=blog)
