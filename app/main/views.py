@@ -142,3 +142,13 @@ def update_blog(id):
 
     return render_template('comment.html', user_form=form, date=date_of_post, writer_blog=writer, comments=comments,
                            title="Update blog")
+
+
+@main.route('/blog/<int:id>/delete', methods=["GET", "POST"])
+@login_required
+def delete_blog(id):
+    blog = Blog.query.filter_by(id=id).first()
+    db.session.delete(blog)
+    db.session.commit()
+
+    return redirect(url_for('main.blogs'))
