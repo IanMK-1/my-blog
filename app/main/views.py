@@ -152,3 +152,14 @@ def delete_blog(id):
     db.session.commit()
 
     return redirect(url_for('main.blogs'))
+
+
+@main.route('/comment/<uname>/delete', methods=["GET", "POST"])
+@login_required
+def delete_comment(uname):
+    user_comment = Comment.query.filter_by(username=uname).first()
+    print(user_comment)
+    db.session.delete(user_comment)
+    db.session.commit()
+
+    return redirect(url_for('main.blogs'))
