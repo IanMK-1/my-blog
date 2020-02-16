@@ -21,6 +21,7 @@
             <div class="col-md-12">
                 <div class="jumbotron">
                     <h1>My Blogs</h1>
+                    <div><a href="{{url_for('main.blog_post')}}" class="btn bg-primary btn-lg">Add a blog post</a></div>
                 </div>
             </div>
         </div>
@@ -28,8 +29,7 @@
             <div class="col-md-6">
                 <div class="option1">
                     <li class="list-group-item">
-                        <p>Would you like to subscribe to email notifications when new blog is posted? Click the link
-                        below to do so.</p>
+                        <p>Would you like to subscribe to email notifications when new blog is posted? Click the link below.</p>
                         <div><a href="{{url_for('main.subscribe')}}" class="btn bg-primary btn-lg">Subscribe</a></div>
                     </li>
                 </div>
@@ -45,15 +45,17 @@
             </div>
         </div>
         <div class="row">
+            <hr>
             <div class="col-md-12">
-                <h3>Blog Posts</h3>
+                <h2 id="blog-post">Blog Posts</h2>
             </div>
         </div>
-        <hr>
         <div class="row">
-            <ul class="list-group">
-                {{macro.displayAllBlogs(all_blogs)}}
-            </ul>
+            <div>
+                <ul class="list-group">
+                    {{macro.displayAllBlogs(all_blogs)}}
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock %}

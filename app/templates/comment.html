@@ -1,0 +1,41 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'macros.html' as macro %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block navbar %}
+    <div class="container-fluid">
+        {% include 'navbar.html'%}
+    </div>
+{% endblock %}
+
+{% block styles%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+    <link href="https://fonts.googleapis.com/css?family=Cabin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+{% endblock %}
+
+{%block content%}
+    <div class="container">
+        <div class="row">
+            <h3>{{writer_blog.title}}</h3>
+            <p>{{writer_blog.blog_post}}</p>
+            <p>Posted by: {{writer_blog.blog_id.full_name}}</p>
+            <p>Posted On: {{date}}</p>
+        </div>
+        <div class="row">
+            <h3>Comments</h3>
+
+                {{ wtf.quick_form(user_form)}}
+
+        </div>
+        <div class="row">
+            <hr>
+            <div class="col-md-12">
+                {{macro.displayUserComments(comments)}}
+            </div>
+        </div>
+    </div>
+{%endblock%}

@@ -18,3 +18,9 @@ class WriterBlogForm(FlaskForm):
 class UpdateBio(FlaskForm):
     bio = TextAreaField('Your bio.', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class UserCommentForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    comment = TextAreaField('Comment', validators=[DataRequired()])
+    submit = SubmitField('submit')

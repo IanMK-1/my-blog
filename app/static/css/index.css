@@ -55,3 +55,11 @@
 .container {
     font-family: 'Cabin', sans-serif;
 }
+#blog-post {
+    font-family: 'Cabin', sans-serif;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.items{
+    margin-bottom: 30px;
+}

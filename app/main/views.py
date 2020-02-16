@@ -3,7 +3,7 @@ from ..request import obtain_quote
 from . import main
 from .. import db, photos
 from ..models import User, Writer, Blog, Comment
-from .main_form import UserSubscription, WriterBlogForm, UpdateBio
+from .main_form import UserSubscription, WriterBlogForm, UpdateBio, UserCommentForm
 from flask_login import login_required, current_user
 
 
@@ -88,7 +88,7 @@ def blog_post():
         title = blog.title.data
         blog_post = blog.blog_post.data
 
-        new_blog = Blog(title=title, blog_post=blog_post, blog=current_user)
+        new_blog = Blog(title=title, blog_post=blog_post, blog_id=current_user)
 
         db.session.add(new_blog)
         db.session.commit()
@@ -97,3 +97,23 @@ def blog_post():
     return render_template('blog_post.html', blog=blog)
 
 
+@main.route('/comment/<int:id>', methods=["GET", "POST"])
+def comment(id):
+    user_form = UserCommentForm()
+    writer_blog = Blog.obtain_writer_blog(id)
+
+    if user_form.validate_on_submit():
+        username = user_form.username.data
+        comment = user_form.comment.data
+
+        user_comment = Comment(username=username, comment=comment, blog_id=current_user, blog_comment_id=writer_blog)
+        db.session.add(user_comment)
+        db.session.commit()
+
+        return redirect('/comment/{writer_blog_id}'.format(writer_blog_id=writer_blog.id))
+
+    date_of_post = writer_blog.posted_at
+
+    comments = Comment.obtain_all_comments(writer_blog)
+
+    return render_template('comment.html', writer_blog=writer_blog, user_form=user_form, comments=comments, date=date_of_post)

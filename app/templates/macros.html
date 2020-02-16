@@ -1,11 +1,26 @@
 {% macro displayAllBlogs(blogs)%}
-    {%for blog in blogs%}
+    {%for writer_blog in blogs%}
         <div class="col-md-3">
-            <li class="list-group-item">
-                <h4>{{blog.title}}</h4>
-                <p>{{blog.blog_post}}</p>
-                <p>Posted by:  {{blog.blog.full_name}} <a href="#" class="btn btn-primary pull-right">View</a> </p>
-            </li>
+            <div class="items">
+                <li class="list-group-item">
+                    <h4>{{writer_blog.title}}</h4>
+                    <p>{{writer_blog.blog_post}}</p>
+                    <p>Posted by:  {{writer_blog.blog_id.full_name}} <a href="/comment/{{writer_blog.id}}" class="btn btn-primary pull-right">View</a> </p>
+                </li>
+            </div>
         </div>
     {%endfor%}
 {%endmacro%}
+
+{% macro displayUserComments(comments) %}
+    {% for comment in comments%}
+        <div class="col-md-3">
+                <div class="comments">
+                    <li class="list-group-item">
+                        <p>Comment by: {{comment.username}}</p>
+                        <p>{{comment.comment}}</p>
+                    </li>
+                </div>
+            </div>
+    {% endfor %}
+{% endmacro %}
