@@ -32,3 +32,10 @@ def writer_login():
         flash('Invalid username or password')
 
     return render_template('writer_auth/login.html', writerlogin_form=login_form)
+
+
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('main.index'))
