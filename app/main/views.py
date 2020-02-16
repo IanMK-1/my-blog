@@ -1,9 +1,10 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, abort, request
 from ..request import obtain_quote
 from . import main
-from .. import db
+from .. import db, photos
 from ..models import User, Writer, Blog, Comment
-from .main_form import UserSubscription, WriterBlogForm
+from .main_form import UserSubscription, WriterBlogForm, UpdateBio
+from flask_login import login_required, current_user
 
 
 @main.route('/')
@@ -33,3 +34,45 @@ def subscribe():
         return redirect(url_for('main.blogs'))
 
     return render_template("subscribe.html", user=user)
+
+
+@main.route('/writer/<full_name>')
+def profile(full_name):
+    writer = Writer.query.filter_by(full_name=full_name).first()
+
+    if writer is None:
+        abort(404)
+
+    return render_template("profile/profile.html", writer=writer)
+
+
+@main.route('/writer/<full_name>/update_bio', methods=['GET', 'POST'])
+@login_required
+def update_bio(full_name):
+    writer = Writer.query.filter_by(full_name=full_name).first()
+    if writer is None:
+        abort(404)
+
+    form = UpdateBio()
+
+    if form.validate_on_submit():
+        writer.bio = form.bio.data
+
+        db.session.add(writer)
+        db.session.commit()
+
+        return redirect(url_for('.profile', full_name=writer.full_name))
+
+    return render_template('profile/update.html', form=form)
+
+
+@main.route('/writer/<full_name>/update/pic', methods=['POST'])
+@login_required
+def update_pic(full_name):
+    writer = Writer.query.filter_by(full_name=full_name).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        writer.profile_pic_path = path
+        db.session.commit()
+    return redirect(url_for('main.profile', full_name=full_name))

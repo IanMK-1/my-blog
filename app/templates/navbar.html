@@ -6,7 +6,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
-    <!--            <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>-->
+                    <li><a href="{{url_for('main.profile',full_name=current_user.full_name)}}">Profile</a></li>
                     <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
                 {% else %}
                     <li><a href="{{url_for('auth.writer_login')}}">Sign in</a></li>

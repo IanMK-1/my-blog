@@ -13,3 +13,8 @@ class WriterBlogForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     blog_post = TextAreaField('Blog', validators=[DataRequired()])
     submit = SubmitField('Add Blog Post')
+
+
+class UpdateBio(FlaskForm):
+    bio = TextAreaField('Your bio.', validators=[DataRequired()])
+    submit = SubmitField('Submit')

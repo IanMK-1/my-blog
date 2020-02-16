@@ -11,6 +11,8 @@ class Writer(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(255), index=True)
     email = db.Column(db.String(255), unique=True, index=True)
+    bio = db.Column(db.String(255))
+    profile_pic_path = db.Column(db.String())
     writer_password = db.Column(db.String(255))
     comment = db.relationship('Comment', backref='comment_id', lazy='dynamic')
     blog = db.relationship('Blog', backref='blog_id', lazy='dynamic')

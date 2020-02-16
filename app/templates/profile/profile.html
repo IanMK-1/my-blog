@@ -1,0 +1,63 @@
+{% extends 'bootstrap/base.html'%}
+
+{% block navbar %}
+    <div class="container-fluid">
+        {% include 'navbar.html'%}
+    </div>
+{% endblock %}
+
+{% block styles%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+    <link href="https://fonts.googleapis.com/css?family=Cabin&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+        <!-- displaying  Username-->
+            <div class="col-md-6">
+                <h3> {{writer.full_name| capitalize}} </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {% if writer.profile_pic_path %}
+                    <img src="{{url_for('static',filename=writer.profile_pic_path)}}" alt="" class="img-thumbnail">
+                {%else%}
+                    <p>No profile picture</p>
+                {% endif %}
+
+                {% if writer == current_user %}
+                    <form  action="{{url_for('main.update_pic',full_name=writer.full_name)}}" method="post" enctype = "multipart/form-data">
+                        <input type="file"  name="photo" class="form-control" required>
+                        <input type="submit">
+                    </form>
+                {% endif %}
+             </div>
+
+
+            <div class="col-md-6">
+
+            <!--Displaying user bio-->
+                <h3>Bio</h3>
+
+                {% if writer.bio %}
+                  <div class="list-group-item">
+                      <p> {{writer.bio}}</p>
+                  </div>
+                {%else%}
+                  <p> {{writer.full_name| capitalize}} has no bio </p>
+                {% endif %}
+
+                {% if writer == current_user %}
+                    <div id="edit">
+                        <a href="{{url_for('main.update_bio',full_name=writer.full_name)}}">Edit profile</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
