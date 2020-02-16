@@ -27,7 +27,7 @@ def writer_login():
         writer = Writer.query.filter_by(email=login_form.email.data).first()
         if writer is not None and writer.verify_password(login_form.writer_password.data):
             login_user(writer, login_form.remember.data)
-            return redirect(request.args.get('next') or url_for('main.index'))
+            return redirect(request.args.get('next') or url_for('main.blogs'))
 
         flash('Invalid username or password')
 
@@ -38,4 +38,4 @@ def writer_login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.blogs'))
