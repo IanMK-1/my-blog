@@ -33,7 +33,7 @@ class Writer(db.Model, UserMixin):
     @login_manager.user_loader
     def load_user(writer_id):
         return User.query.get(int(writer_id))
-    
+
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -53,7 +53,7 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     blog_post = db.Column(db.String())
-    posted_at = db.Column(db.Datetime, default=datetime.utcnow)
+    posted_at = db.Column(db.DateTime, default=datetime.utcnow)
     writer_blog = db.Column(db.Integer, db.ForeignKey('writers.id'))
     blog_comment = db.relationship('Comment', backref='blog_comment_id', lazy='dynamic')
 
