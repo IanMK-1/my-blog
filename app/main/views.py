@@ -116,4 +116,28 @@ def comment(id):
 
     comments = Comment.obtain_all_comments(writer_blog)
 
-    return render_template('comment.html', writer_blog=writer_blog, user_form=user_form, comments=comments, date=date_of_post)
+    return render_template('comment.html', writer_blog=writer_blog, user_form=user_form, comments=comments,
+                           date=date_of_post)
+
+
+@main.route('/blog/<int:id>/update', methods=["GET", "POST"])
+@login_required
+def update_blog(id):
+    writer = Blog.query.filter_by(id=id).first()
+
+    if writer is None:
+        abort(404)
+
+    form = WriterBlogForm()
+
+    if form.validate_on_submit():
+        writer.title = form.title.data
+        writer.blog_post = form.blog_post.data
+        db.session.commit()
+
+        return redirect(url_for('main.comment', id=writer.id))
+
+    date_of_post = writer.posted_at
+    comments = Comment.obtain_all_comments(writer)
+
+    return render_template('comment.html', user_form=form, date=date_of_post, writer_blog=writer, comments=comments)

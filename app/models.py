@@ -68,9 +68,10 @@ class Blog(db.Model):
         db.session.commit()
 
     @classmethod
-    def update_blog(cls, id, blog_details):
-        writer_blog = Blog.query.filter_by(id=id).update({"blog_post": blog_details})
-        db.session.commit(writer_blog)
+    def update_blog(cls, id, blog_details, title_details):
+        writer_blog = Blog.query.filter_by(id=id).update({"blog_post": blog_details, "title": title_details})
+        db.session.add(writer_blog)
+        db.session.commit()
 
     @classmethod
     def obtain_all_blogs(cls):
