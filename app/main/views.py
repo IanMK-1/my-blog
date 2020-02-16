@@ -117,7 +117,7 @@ def comment(id):
     comments = Comment.obtain_all_comments(writer_blog)
 
     return render_template('comment.html', writer_blog=writer_blog, user_form=user_form, comments=comments,
-                           date=date_of_post)
+                           date=date_of_post, title="Comments")
 
 
 @main.route('/blog/<int:id>/update', methods=["GET", "POST"])
@@ -140,4 +140,5 @@ def update_blog(id):
     date_of_post = writer.posted_at
     comments = Comment.obtain_all_comments(writer)
 
-    return render_template('comment.html', user_form=form, date=date_of_post, writer_blog=writer, comments=comments)
+    return render_template('comment.html', user_form=form, date=date_of_post, writer_blog=writer, comments=comments,
+                           title="Update blog")

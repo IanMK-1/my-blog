@@ -27,10 +27,8 @@
             <div><a href="/blog/{{writer_blog.id}}/update" class="btn btn-primary">Update blog</a></div>
         </div>
         <div class="row">
-            <h3>Comments</h3>
-
-                {{ wtf.quick_form(user_form)}}
-
+            <h3>{{title}}</h3>
+            {{ wtf.quick_form(user_form)}}
         </div>
         <div class="row">
             <hr>
