@@ -95,7 +95,7 @@ def blog_post():
         db.session.add(new_blog)
         db.session.commit()
 
-        mail_message("Welcome to my blog", "email/blog_notification", user.email)
+        mail_message("Hello", "email/blog_notification", user=user)
 
         return redirect(url_for('main.blogs'))
 

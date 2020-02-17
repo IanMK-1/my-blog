@@ -1,3 +1,4 @@
 Hello,
-A new blog has been posted
-Please visit the website to read the blog.
+you subscribed to receive notifications when a new blog has been posted.
+Please visit the website to read the new blog posted.
+from ian's blog website

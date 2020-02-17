@@ -1,13 +1,19 @@
 from flask_mail import Message
 from flask import render_template
 from . import mail
+from .models import User
 
 
-def mail_message(subject, template, to, **kwargs):
-    sender_email = 'markgarret55@gmail.com'
+def mail_message(template, **kwargs):
+    users = User.query.all()
+    with mail.connect() as conn:
+        for user in users:
+            sender_email = 'markgarret55@gmail.com'
 
-    email = Message(subject, sender=sender_email, recipients=[to])
-    email.body = render_template(template + ".txt", **kwargs)
-    email.html = render_template(template + ".html", **kwargs)
-    mail.send(email)
+            msg = Message(recipients=[user.email],
+                          sender=sender_email)
 
+            msg.body = render_template(template + ".txt", **kwargs)
+            msg.html = render_template(template + ".html", **kwargs)
+
+            conn.send(msg)
